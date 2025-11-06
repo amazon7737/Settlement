@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>계산 메모장</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="global.css">
 </head>
 <body class="bg-white min-h-screen">
-    <!-- 정보 버튼 -->
     <button
         id="info-button"
         class="fixed top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-gray-600 hover:text-gray-800 info-button-attention"
@@ -19,95 +18,9 @@
         </svg>
     </button>
 
-    <!-- 모달 오버레이 -->
-    <div
-        id="modal-overlay"
-        class="hidden fixed inset-0 bg-black/50 z-40 transition-opacity"
-    ></div>
-
-    <!-- 모달 -->
-    <div
-        id="info-modal"
-        class="hidden fixed inset-0 z-50 flex items-center justify-center p-4"
-    >
-        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                <h2 class="text-2xl font-semibold text-gray-900">계산 메모장 사용법</h2>
-                <button
-                    id="close-button"
-                    class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-gray-500 hover:text-gray-700"
-                    aria-label="닫기"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <div class="px-6 py-6 space-y-6">
-                <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">기능 소개</h3>
-                    <p class="text-gray-700 leading-relaxed">
-                        계산 메모장은 텍스트를 입력하면 자동으로 숫자와 연산자를 인식하여 계산 결과를 오른쪽에 표시하는 에디터입니다.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">사용 방법</h3>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span>
-                            <span>에디터에 숫자와 연산자를 자유롭게 입력하세요.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span>
-                            <span>텍스트와 숫자가 섞여 있어도 자동으로 인식합니다.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span>
-                            <span>천 단위 쉼표(,)가 포함된 숫자도 인식합니다.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span>
-                            <span>계산 결과는 오른쪽에 실시간으로 표시됩니다.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">입력 예시</h3>
-                    <div class="bg-gray-50 rounded-lg p-4 space-y-2 font-mono text-sm">
-                        <div class="text-gray-600">순수 수식:</div>
-                        <div class="text-gray-900">1000 + 2000 - 500</div>
-                        <div class="text-gray-600 mt-4">천 단위 쉼표 포함:</div>
-                        <div class="text-gray-900">600,000 + 100,000</div>
-                        <div class="text-gray-600 mt-4">텍스트와 숫자 혼합:</div>
-                        <div class="text-gray-900">사과 1000 + 바나나 2000 - 할인 500</div>
-                        <div class="text-gray-600 mt-4">여러 숫자 나열:</div>
-                        <div class="text-gray-900">1000 2000 3000</div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">지원 연산자</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-md font-mono">+</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-md font-mono">-</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-md font-mono">*</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-md font-mono">/</span>
-                    </div>
-                </div>
-
-                <div class="pt-4 border-t border-gray-200">
-                    <p class="text-sm text-gray-500">
-                        계산 결과는 실시간으로 업데이트되며, 입력한 내용을 자동으로 분석하여 최종 합계를 표시합니다.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="modal-container"></div>
 
     <div class="flex h-screen">
-        <!-- 메인 에디터 영역 -->
         <div class="flex-1 flex flex-col relative">
             <div class="flex-1 p-16 relative" id="editor-container">
                 <div 

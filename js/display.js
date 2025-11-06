@@ -7,18 +7,16 @@ function formatNumber(number) {
     return number.toLocaleString('ko-KR');
 }
 
-function getCaretPosition() {
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return null;
-    
-    const range = selection.getRangeAt(0).cloneRange();
-    range.collapse(true);
+function getTextEndPosition() {
+    const textEndRange = document.createRange();
+    textEndRange.selectNodeContents(editor);
+    textEndRange.collapse(false);
     
     let rect;
     let tempSpan = null;
     
     try {
-        rect = range.getBoundingClientRect();
+        rect = textEndRange.getBoundingClientRect();
         
         if (rect.width === 0 && rect.height === 0) {
             tempSpan = document.createElement('span');
@@ -27,7 +25,7 @@ function getCaretPosition() {
             tempSpan.style.whiteSpace = 'pre';
             tempSpan.textContent = '\u200b';
             
-            range.insertNode(tempSpan);
+            textEndRange.insertNode(tempSpan);
             rect = tempSpan.getBoundingClientRect();
         }
     } catch (e) {
@@ -52,7 +50,7 @@ function getCaretPosition() {
 
 function updateResultPosition() {
     requestAnimationFrame(() => {
-        const position = getCaretPosition();
+        const position = getTextEndPosition();
         if (position) {
             resultDisplay.style.left = `${position.left + 8}px`;
             resultDisplay.style.top = `${position.top}px`;
