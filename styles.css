@@ -1,0 +1,8 @@
+#editor {
+    caret-color: #3b82f6;
+}
+
+#editor:empty::before {
+    content: '';
+}
+
