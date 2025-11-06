@@ -57,11 +57,11 @@ export function extractNumbersAndOperators(text) {
             continue;
         }
         
-        const numberMatch = remainingText.match(NUMBER_PATTERN);
+        const numberMatch = remainingText.match(/^\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?|\d+\.?\d*)/);
         if (numberMatch) {
             const numStr = numberMatch[1].replace(COMMA_PATTERN, '');
             const num = parseFloat(numStr);
-            if (!isNaN(num)) {
+            if (!isNaN(num) && isFinite(num)) {
                 numbers.push(num);
             }
             currentIndex += numberMatch[0].length;
