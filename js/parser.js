@@ -38,22 +38,49 @@ export function parseNumber(token) {
     return !isNaN(num) ? num : null;
 }
 
-export function extractNumbersAndOperators(tokens) {
+export function extractNumbersAndOperators(text) {
     const numbers = [];
     const operators = [];
     
-    for (const token of tokens) {
-        const trimmedToken = token.trim();
-        if (!trimmedToken) continue;
+    const normalizedText = normalizeText(text);
+    
+    let currentIndex = 0;
+    const textLength = normalizedText.length;
+    
+    while (currentIndex < textLength) {
+        const remainingText = normalizedText.substring(currentIndex);
         
-        if (OPERATOR_PATTERN.test(trimmedToken)) {
-            operators.push(trimmedToken);
-        } else {
-            const number = parseNumber(trimmedToken);
-            if (number !== null) {
-                numbers.push(number);
-            }
+        const operatorMatch = remainingText.match(/^\s*([+\-*/])\s*/);
+        if (operatorMatch) {
+            operators.push(operatorMatch[1]);
+            currentIndex += operatorMatch[0].length;
+            continue;
         }
+        
+        const numberMatch = remainingText.match(NUMBER_PATTERN);
+        if (numberMatch) {
+            const numStr = numberMatch[1].replace(COMMA_PATTERN, '');
+            const num = parseFloat(numStr);
+            if (!isNaN(num)) {
+                numbers.push(num);
+            }
+            currentIndex += numberMatch[0].length;
+            continue;
+        }
+        
+        const spaceMatch = remainingText.match(/^\s+/);
+        if (spaceMatch) {
+            currentIndex += spaceMatch[0].length;
+            continue;
+        }
+        
+        const nonSpaceMatch = remainingText.match(/^[^\s+\-*/]+/);
+        if (nonSpaceMatch) {
+            currentIndex += nonSpaceMatch[0].length;
+            continue;
+        }
+        
+        currentIndex++;
     }
     
     return { numbers, operators };

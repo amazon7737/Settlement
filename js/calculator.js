@@ -53,9 +53,7 @@ export function calculate(text) {
         }
     }
     
-    const normalizedText = normalizeText(trimmedText);
-    const tokens = normalizedText.split(/\s+/);
-    const { numbers, operators } = extractNumbersAndOperators(tokens);
+    const { numbers, operators } = extractNumbersAndOperators(trimmedText);
     
     if (numbers.length === 0) return null;
     

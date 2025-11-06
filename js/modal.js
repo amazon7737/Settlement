@@ -27,10 +27,17 @@ function handleEscapeKey(event) {
     }
 }
 
+function removeAttentionAnimation() {
+    setTimeout(() => {
+        infoButton.classList.remove('info-button-attention');
+    }, 5000);
+}
+
 export function initializeModal() {
     infoButton.addEventListener('click', openModal);
     closeButton.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', handleOverlayClick);
     document.addEventListener('keydown', handleEscapeKey);
+    removeAttentionAnimation();
 }
 
