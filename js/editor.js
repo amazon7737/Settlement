@@ -1,6 +1,6 @@
 import { PASTE_UPDATE_DELAY_MS } from './constants.js';
 import { calculate } from './calculator.js';
-import { updateResultDisplay } from './display.js';
+import { updateResultDisplay, updateResultPositionOnCursorMove } from './display.js';
 
 const editor = document.getElementById('editor');
 
@@ -24,10 +24,23 @@ function handleBlur() {
     }
 }
 
+function handleKeyDown(event) {
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+        setTimeout(updateResultPositionOnCursorMove, 10);
+    }
+}
+
+function handleClick() {
+    setTimeout(updateResultPositionOnCursorMove, 10);
+}
+
 export function initializeEditor() {
     editor.addEventListener('input', updateResult);
     editor.addEventListener('paste', handlePaste);
     editor.addEventListener('blur', handleBlur);
+    editor.addEventListener('keydown', handleKeyDown);
+    editor.addEventListener('click', handleClick);
+    editor.addEventListener('keyup', updateResultPositionOnCursorMove);
     editor.focus();
 }
 
