@@ -57,7 +57,7 @@ export function extractNumbersAndOperators(text) {
             continue;
         }
         
-        const numberMatch = remainingText.match(/^\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?|\d+\.?\d*)/);
+        const numberMatch = remainingText.match(/^\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?|\d+(?:\.\d+)?)(?=\s|$|[+\-*/]|[^\d\s+\-*/])/);
         if (numberMatch) {
             const numStr = numberMatch[1].replace(COMMA_PATTERN, '');
             const num = parseFloat(numStr);
