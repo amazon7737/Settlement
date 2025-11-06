@@ -109,7 +109,7 @@
     <div class="flex h-screen">
         <!-- 메인 에디터 영역 -->
         <div class="flex-1 flex flex-col relative">
-            <div class="flex-1 p-16 relative">
+            <div class="flex-1 p-16 relative" id="editor-container">
                 <div 
                     id="editor" 
                     contenteditable="true" 
@@ -118,7 +118,7 @@
                 ></div>
                 <div 
                     id="result" 
-                    class="absolute text-2xl font-light text-blue-500 pointer-events-none"
+                    class="absolute text-2xl font-light text-blue-500 pointer-events-none whitespace-nowrap"
                     style="opacity: 0;"
                 >
                     <span>0</span>
